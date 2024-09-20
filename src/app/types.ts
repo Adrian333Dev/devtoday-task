@@ -2,6 +2,7 @@
 export interface ICountry {
   countryCode: string;
   name: string;
+  nextHoliday?: IHoliday;
 }
 
 export interface ICountryInfo {

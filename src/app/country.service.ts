@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { ICountry, ICountryInfo, IHoliday } from './types';
 import { environment as env } from '../environments/environment';
@@ -30,51 +30,53 @@ export class NagerDateService {
    */
   getHolidaysByCountryAndYear(
     year: number,
-    countryCode: string
+    countryCode: string,
   ): Observable<IHoliday[]> {
     return this.http
       .get<IHoliday[]>(`${this.baseUrl}/PublicHoliday/${year}/${countryCode}`)
       .pipe(
         catchError(
-          this.handleError<IHoliday[]>('getHolidaysByCountryAndYear', [])
-        )
+          this.handleError<IHoliday[]>('getHolidaysByCountryAndYear', []),
+        ),
       );
   }
 
   /**
    * Fetch the next public holidays worldwide.
    */
-  getNextPublicHolidays(): Observable<any[]> {
+  getNextPublicHolidays(): Observable<IHoliday[]> {
     return this.http
-      .get<any[]>(`${this.baseUrl}/NextPublicHolidaysWorldwide`)
-      .pipe(catchError(this.handleError<any[]>('getNextPublicHolidays', [])));
+      .get<IHoliday[]>(`${this.baseUrl}/NextPublicHolidaysWorldwide`)
+      .pipe(
+        catchError(this.handleError<IHoliday[]>('getNextPublicHolidays', [])),
+      );
   }
 
   /**
    * Fetch the next public holidays for a specific country.
    * @param countryCode - the country code (ISO 3166-1 alpha-2)
    */
-  getNextPublicHolidaysByCountry(countryCode: string): Observable<any[]> {
+  getNextPublicHolidaysByCountry(countryCode: string): Observable<IHoliday[]> {
     return this.http
-      .get<any[]>(`${this.baseUrl}/NextPublicHolidays/${countryCode}`)
+      .get<IHoliday[]>(`${this.baseUrl}/NextPublicHolidays/${countryCode}`)
       .pipe(
         catchError(
-          this.handleError<any[]>('getNextPublicHolidaysByCountry', [])
-        )
+          this.handleError<IHoliday[]>('getNextPublicHolidaysByCountry', []),
+        ),
       );
   }
 
   // Fetch country info by country code
   getCountryInfo(countryCode: string): Observable<ICountryInfo> {
     return this.http.get<ICountryInfo>(
-      `${this.baseUrl}/CountryInfo/${countryCode}`
+      `${this.baseUrl}/CountryInfo/${countryCode}`,
     );
   }
 
   // Fetch holidays by country code and year
   getHolidays(countryCode: string, year: number): Observable<IHoliday[]> {
     return this.http.get<IHoliday[]>(
-      `${this.baseUrl}/PublicHolidays/${year}/${countryCode}`
+      `${this.baseUrl}/PublicHolidays/${year}/${countryCode}`,
     );
   }
 
@@ -84,7 +86,7 @@ export class NagerDateService {
    * @param result - optional value to return as the observable result
    */
   private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+    return (error: Error): Observable<T> => {
       console.error(`${operation} failed: ${error.message}`);
       // Return an empty result to keep the app running
       return of(result as T);

@@ -1,3 +1,3 @@
-import { CountryPage } from './country.component';
+import { CountryPageComponent } from './country.component';
 
-export default CountryPage;
+export default CountryPageComponent;

@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NagerDateService } from '../country.service';
 import { ICountryInfo, IHoliday } from '../types';
@@ -19,7 +18,7 @@ import {
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
-  selector: 'country',
+  selector: 'app-country',
   standalone: true,
   imports: [
     CommonModule,
@@ -40,7 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './country.component.html',
   styleUrl: './country.component.scss',
 })
-export class CountryPage implements OnInit {
+export class CountryPageComponent implements OnInit {
   countryCode = signal<string | null>(null);
   countryInfo = signal<ICountryInfo | null>(null);
   holidays = signal<IHoliday[] | null>(null);

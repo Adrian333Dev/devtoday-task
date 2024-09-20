@@ -1,21 +1,19 @@
 import { Component, computed, effect, OnInit, signal } from '@angular/core';
 import {
-  Router,
   RouterLink,
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { ICountry } from '../types';
 import { NagerDateService } from '../country.service';
 import { MatListModule } from '@angular/material/list';
 
 @Component({
-  selector: 'home',
+  selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,7 +30,7 @@ import { MatListModule } from '@angular/material/list';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomePage implements OnInit {
+export class HomePageComponent implements OnInit {
   // Signals to manage state
   countries = signal<ICountry[]>([]);
   searchQuery = signal<string>('');
@@ -42,7 +40,7 @@ export class HomePage implements OnInit {
     )
   );
 
-  randomCountries = signal<any[]>([]);
+  randomCountries = signal<ICountry[]>([]);
 
   constructor(private nagerDateService: NagerDateService) {
     // Effect to reactively log or update something when countries or search changes
@@ -74,19 +72,19 @@ export class HomePage implements OnInit {
         this.nagerDateService
           .getNextPublicHolidaysByCountry(country.countryCode)
           .subscribe((holidays) => {
-            country.holiday = holidays[0]; // Set the first holiday for display
+            country.nextHoliday = holidays[0]; // Set the first holiday for display
           });
       });
     });
   }
 
-  getRandomItems(arr: any[], count: number): any[] {
+  getRandomItems<T>(arr: T[], count: number): T[] {
     const shuffled = arr.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   }
 
   // Update searchQuery signal on user input
-  onSearch(event: any): void {
-    this.searchQuery.set(event.target.value);
+  onSearch(event: Event): void {
+    this.searchQuery.set((event?.target as HTMLInputElement).value);
   }
 }
