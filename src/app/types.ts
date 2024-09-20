@@ -9,7 +9,7 @@ export interface ICountryInfo {
   officialName: string;
   countryCode: string;
   region: string;
-  borders?: string[];
+  borders?: ICountryBorder[];
 }
 
 export interface IHoliday {
@@ -21,7 +21,15 @@ export interface IHoliday {
   global?: true;
   counties?: string[];
   launchYear?: number;
-  types: HolidayTypes;
+  types: HolidayTypes[];
+}
+
+export interface ICountryBorder {
+  commonName: string;
+  officialName: string;
+  countryCode: string;
+  region: string;
+  borders: string[] | null;
 }
 
 // Enums

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { ICountry, IHoliday } from './types';
+import { ICountry, ICountryInfo, IHoliday } from './types';
 import { environment as env } from '../environments/environment';
 
 @Injectable({
@@ -62,6 +62,20 @@ export class NagerDateService {
           this.handleError<any[]>('getNextPublicHolidaysByCountry', [])
         )
       );
+  }
+
+  // Fetch country info by country code
+  getCountryInfo(countryCode: string): Observable<ICountryInfo> {
+    return this.http.get<ICountryInfo>(
+      `${this.baseUrl}/CountryInfo/${countryCode}`
+    );
+  }
+
+  // Fetch holidays by country code and year
+  getHolidays(countryCode: string, year: number): Observable<IHoliday[]> {
+    return this.http.get<IHoliday[]>(
+      `${this.baseUrl}/PublicHolidays/${year}/${countryCode}`
+    );
   }
 
   /**

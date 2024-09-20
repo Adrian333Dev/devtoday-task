@@ -5,7 +5,7 @@
 $theme: mat.define-theme(
   (
     color: (
-      theme-type: dark,
+      theme-type: light,
       primary: mat.$azure-palette,
       tertiary: mat.$blue-palette,
     ),
@@ -26,4 +26,8 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+  padding: 0 6 !important;
 }

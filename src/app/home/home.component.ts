@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { ICountry } from '../types';
 import { NagerDateService } from '../country.service';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'home',
@@ -26,6 +27,7 @@ import { NagerDateService } from '../country.service';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatListModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

@@ -11,5 +11,3 @@ GET {{baseURL}}AvailableCountries
 
 ### Get Country Info
 GET {{baseURL}}CountryInfo/{countryCode}
-
-

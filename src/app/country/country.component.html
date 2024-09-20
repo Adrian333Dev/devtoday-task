@@ -1,22 +1,86 @@
 <div class="container mt-5">
-  <h1>Holidays in {{ countryCode }}</h1>
+  <div class="row">
+    <!-- Country Info Section -->
+    <div class="col-md-6">
+      <mat-card *ngIf="countryInfo()">
+        <mat-card-header>
+          <mat-card-title>{{ countryInfo()?.commonName }}</mat-card-title>
+          <mat-card-subtitle
+            >{{ countryInfo()?.officialName }} ({{
+              countryInfo()?.countryCode
+            }})</mat-card-subtitle
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Region:</strong> {{ countryInfo()?.region }}</p>
 
-  <div class="year-selector mt-3">
-    <button
-      *ngFor="let year of years"
-      class="btn btn-primary mx-1"
-      [class.active]="year === selectedYear()"
-      (click)="onYearChange(year)"
-    >
-      {{ year }}
-    </button>
+          <div *ngIf="countryInfo()?.borders?.length">
+            <p><strong>Borders:</strong></p>
+            <ul>
+              <li *ngFor="let border of countryInfo()?.borders">
+                {{ border.commonName }} ({{ border.officialName }}) - Code:
+                {{ border.countryCode }}
+              </li>
+            </ul>
+          </div>
+
+          <div *ngIf="countryInfo()?.borders?.length === 0">
+            <p>No bordering countries.</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Holidays Section -->
+    <div class="col-md-6">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Holidays in {{ currentYear() }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- Year Pagination -->
+
+          <div class="year-selection mt-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Select Year</mat-label>
+              <mat-select
+                [value]="currentYear()"
+                (selectionChange)="onYearChange($event.value)"
+              >
+                <mat-option *ngFor="let year of yearsRange" [value]="year">
+                  {{ year }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Holiday List with Fixed Height and Scroll -->
+          <div
+            class="holiday-list"
+            *ngIf="holidays() && holidays()?.length; else noHolidays"
+          >
+            <mat-list>
+              <mat-list-item *ngFor="let holiday of holidays()">
+                <div>
+                  <p>
+                    <strong
+                      >{{ holiday.localName }} ({{ holiday.name }})</strong
+                    >
+                  </p>
+                  <p><strong>Date:</strong> {{ holiday.date | date }}</p>
+                  <p><strong>Type:</strong> {{ holiday.types.join(", ") }}</p>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+
+          <ng-template #noHolidays>
+            <p>No holidays found for this year.</p>
+          </ng-template>
+
+          <p *ngIf="!holidays()">Loading holidays...</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
-
-  <ul class="holiday-list mt-4">
-    <li *ngFor="let holiday of holidays()">
-      <strong>{{ holiday.localName }}</strong> - {{ holiday.date | date }} ({{
-        holiday.type
-      }})
-    </li>
-  </ul>
 </div>

@@ -1,46 +1,90 @@
 <div class="container mt-5">
-  <!-- Country Search -->
-  <div class="search-section">
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label>Search Country</mat-label>
-      <input
-        matInput
-        type="text"
-        [value]="searchQuery()"
-        (input)="onSearch($event)"
-        placeholder="Enter country name"
-      />
-    </mat-form-field>
+  <div class="row">
+    <!-- Country Search and List Section -->
+    <div class="col-md-6">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Search for a Country</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Search Country</mat-label>
+            <input
+              matInput
+              type="text"
+              [value]="searchQuery()"
+              (input)="onSearch($event)"
+              placeholder="Enter country name"
+            />
+          </mat-form-field>
 
-    <div class="search-results mt-3">
-      <ul *ngIf="filteredCountries().length > 0">
-        <li *ngFor="let country of filteredCountries()">
-          <a [routerLink]="['/country', country.countryCode]">{{
-            country.name
-          }}</a>
-        </li>
-      </ul>
+          <!-- Scrollable list with a fixed height -->
+          <div
+            class="search-results mt-3"
+            style="max-height: 300px; overflow-y: auto"
+          >
+            <mat-list *ngIf="filteredCountries().length > 0">
+              <mat-list-item *ngFor="let country of filteredCountries()">
+                <a [routerLink]="['/country', country.countryCode]">{{
+                  country.name
+                }}</a>
+              </mat-list-item>
+            </mat-list>
+            <p *ngIf="filteredCountries().length === 0">No results found.</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
-  </div>
 
-  <!-- Random Countries Widget -->
-  <div class="random-countries-section mt-5">
-    <h2>Random Countries and Their Next Holidays</h2>
-    <div class="row">
-      <div class="col-md-4" *ngFor="let country of randomCountries()">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>{{ country.name }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <p>
-              <strong>Next Holiday:</strong>
-              {{ country.holiday?.localName || "Not available" }}
-            </p>
-            <p><strong>Date:</strong> {{ country.holiday?.date | date }}</p>
-          </mat-card-content>
-        </mat-card>
-      </div>
+    <!-- Random Countries and Holidays Section -->
+    <div class="col-md-6">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title
+            >Random Countries and Their Next Holidays</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div
+              class="col-md-12"
+              *ngIf="randomCountries().length > 0; else noHolidays"
+            >
+              <div
+                *ngFor="let country of randomCountries()"
+                class="holiday-card"
+              >
+                <mat-card class="mt-2">
+                  <mat-card-header>
+                    <mat-card-title>{{ country.name }}</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p>
+                      <strong>Next Holiday:</strong>
+                      {{ country.holiday?.localName || "Not available" }}
+                    </p>
+                    <p>
+                      <strong>Date:</strong> {{ country.holiday?.date | date }}
+                    </p>
+                  </mat-card-content>
+                  <mat-card-actions>
+                    <button
+                      mat-button
+                      color="primary"
+                      [routerLink]="['/country', country.alpha2Code]"
+                    >
+                      View Holidays
+                    </button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+            </div>
+            <ng-template #noHolidays>
+              <p>No holidays found.</p>
+            </ng-template>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

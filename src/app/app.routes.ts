@@ -6,7 +6,7 @@ export const routes: Routes = [
     loadComponent: () => import('./home'),
   },
   {
-    path: 'country/:countryId',
+    path: 'country/:countryCode',
     loadComponent: () => import('./country'),
   },
 ];
