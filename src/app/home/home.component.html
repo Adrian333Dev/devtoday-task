@@ -1,0 +1,46 @@
+<div class="container mt-5">
+  <!-- Country Search -->
+  <div class="search-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Search Country</mat-label>
+      <input
+        matInput
+        type="text"
+        [value]="searchQuery()"
+        (input)="onSearch($event)"
+        placeholder="Enter country name"
+      />
+    </mat-form-field>
+
+    <div class="search-results mt-3">
+      <ul *ngIf="filteredCountries().length > 0">
+        <li *ngFor="let country of filteredCountries()">
+          <a [routerLink]="['/country', country.countryCode]">{{
+            country.name
+          }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Random Countries Widget -->
+  <div class="random-countries-section mt-5">
+    <h2>Random Countries and Their Next Holidays</h2>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let country of randomCountries()">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>{{ country.name }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              <strong>Next Holiday:</strong>
+              {{ country.holiday?.localName || "Not available" }}
+            </p>
+            <p><strong>Date:</strong> {{ country.holiday?.date | date }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

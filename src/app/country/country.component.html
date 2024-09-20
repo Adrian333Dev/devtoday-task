@@ -1,0 +1,22 @@
+<div class="container mt-5">
+  <h1>Holidays in {{ countryCode }}</h1>
+
+  <div class="year-selector mt-3">
+    <button
+      *ngFor="let year of years"
+      class="btn btn-primary mx-1"
+      [class.active]="year === selectedYear()"
+      (click)="onYearChange(year)"
+    >
+      {{ year }}
+    </button>
+  </div>
+
+  <ul class="holiday-list mt-4">
+    <li *ngFor="let holiday of holidays()">
+      <strong>{{ holiday.localName }}</strong> - {{ holiday.date | date }} ({{
+        holiday.type
+      }})
+    </li>
+  </ul>
+</div>

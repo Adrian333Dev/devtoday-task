@@ -1,0 +1,15 @@
+
+# Test
+
+## Variables
+
+@baseURL = https://date.nager.at/api/v3/
+
+### Get Available Countries
+GET {{baseURL}}AvailableCountries
+
+
+### Get Country Info
+GET {{baseURL}}CountryInfo/{countryCode}
+
+
