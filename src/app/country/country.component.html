@@ -2,29 +2,38 @@
   <div class="row">
     <!-- Country Info Section -->
     <div class="col-md-6">
-      <mat-card *ngIf="countryInfo()">
-        <mat-card-header>
-          <mat-card-title>{{ countryInfo()?.commonName }}</mat-card-title>
-          <mat-card-subtitle>{{ countryInfo()?.officialName }} ({{ countryInfo()?.countryCode }})</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p><strong>Region:</strong> {{ countryInfo()?.region }}</p>
-
-          <div *ngIf="countryInfo()?.borders?.length">
-            <p><strong>Borders:</strong></p>
-            <ul>
-              <li *ngFor="let border of countryInfo()?.borders">
-                {{ border.commonName }} ({{ border.officialName }}) - Code:
-                {{ border.countryCode }}
-              </li>
-            </ul>
-          </div>
-
-          <div *ngIf="countryInfo()?.borders?.length === 0">
-            <p>No bordering countries.</p>
-          </div>
-        </mat-card-content>
-      </mat-card>
+      <button mat-mini-fab [routerLink]="['/']">
+        <mat-icon>home</mat-icon>
+      </button>
+      @if (countryInfo()) {
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>{{ countryInfo()?.commonName }}</mat-card-title>
+            <mat-card-subtitle>{{ countryInfo()?.officialName }} ({{ countryInfo()?.countryCode }})</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p><strong>Region:</strong> {{ countryInfo()?.region }}</p>
+            @if (countryInfo()?.borders?.length) {
+              <div>
+                <p><strong>Borders:</strong></p>
+                <ul>
+                  @for (border of countryInfo()?.borders; track border) {
+                    <li>
+                      {{ border.commonName }} ({{ border.officialName }}) - Code:
+                      {{ border.countryCode }}
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+            @if (countryInfo()?.borders?.length === 0) {
+              <div>
+                <p>No bordering countries.</p>
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
     </div>
 
     <!-- Holidays Section -->
@@ -40,33 +49,39 @@
             <mat-form-field appearance="outline">
               <mat-label>Select Year</mat-label>
               <mat-select [value]="currentYear()" (selectionChange)="onYearChange($event.value)">
-                <mat-option *ngFor="let year of yearsRange" [value]="year">
-                  {{ year }}
-                </mat-option>
+                @for (year of yearsRange; track year) {
+                  <mat-option [value]="year">
+                    {{ year }}
+                  </mat-option>
+                }
               </mat-select>
             </mat-form-field>
           </div>
 
           <!-- Holiday List with Fixed Height and Scroll -->
-          <div class="holiday-list" *ngIf="holidays() && holidays()?.length; else noHolidays">
-            <mat-list>
-              <mat-list-item *ngFor="let holiday of holidays()">
-                <div>
-                  <p>
-                    <strong>{{ holiday.localName }} ({{ holiday.name }})</strong>
-                  </p>
-                  <p><strong>Date:</strong> {{ holiday.date | date }}</p>
-                  <p><strong>Type:</strong> {{ holiday.types.join(', ') }}</p>
-                </div>
-              </mat-list-item>
-            </mat-list>
-          </div>
-
-          <ng-template #noHolidays>
+          @if (holidays() && holidays()?.length) {
+            <div class="holiday-list">
+              <mat-list>
+                @for (holiday of holidays(); track holiday) {
+                  <mat-list-item>
+                    <div>
+                      <p>
+                        <strong>{{ holiday.localName }} ({{ holiday.name }})</strong>
+                      </p>
+                      <p><strong>Date:</strong> {{ holiday.date | date }}</p>
+                      <p><strong>Type:</strong> {{ holiday.types.join(', ') }}</p>
+                    </div>
+                  </mat-list-item>
+                }
+              </mat-list>
+            </div>
+          } @else {
             <p>No holidays found for this year.</p>
-          </ng-template>
+          }
 
-          <p *ngIf="!holidays()">Loading holidays...</p>
+          @if (!holidays()) {
+            <p>Loading holidays...</p>
+          }
         </mat-card-content>
       </mat-card>
     </div>

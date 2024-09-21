@@ -1,12 +1,15 @@
 import { Component, computed, effect, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { ICountry } from '../types';
-import { NagerDateService } from '../country.service';
 import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+
+import { NagerDateService } from '../nager-fate.service';
+import { ICountry } from '../types';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +25,7 @@ import { MatListModule } from '@angular/material/list';
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
+    MatButtonModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

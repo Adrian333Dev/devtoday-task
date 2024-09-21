@@ -1,12 +1,10 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { NagerDateService } from '../country.service';
-import { ICountryInfo, IHoliday } from '../types';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,11 +12,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 
+import { ICountryInfo, IHoliday } from '../types';
+import { NagerDateService } from '../nager-fate.service';
+
 @Component({
   selector: 'app-country',
   standalone: true,
   imports: [
     CommonModule,
+    RouterLink,
 
     // Angular Material
     MatButtonModule,
