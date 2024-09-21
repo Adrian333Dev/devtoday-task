@@ -11,10 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {
-  MatButtonToggle,
-  MatButtonToggleGroup,
-} from '@angular/material/button-toggle';
+import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
@@ -34,7 +31,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatListModule,
     MatButtonToggleGroup,
     MatButtonToggle,
-    MatSelectModule
+    MatSelectModule,
   ],
   templateUrl: './country.component.html',
   styleUrl: './country.component.scss',

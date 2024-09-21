@@ -28,17 +28,10 @@ export class NagerDateService {
    * @param year - the year for which the holidays are requested
    * @param countryCode - the country code (ISO 3166-1 alpha-2)
    */
-  getHolidaysByCountryAndYear(
-    year: number,
-    countryCode: string,
-  ): Observable<IHoliday[]> {
+  getHolidaysByCountryAndYear(year: number, countryCode: string): Observable<IHoliday[]> {
     return this.http
       .get<IHoliday[]>(`${this.baseUrl}/PublicHoliday/${year}/${countryCode}`)
-      .pipe(
-        catchError(
-          this.handleError<IHoliday[]>('getHolidaysByCountryAndYear', []),
-        ),
-      );
+      .pipe(catchError(this.handleError<IHoliday[]>('', [])));
   }
 
   /**
@@ -47,9 +40,7 @@ export class NagerDateService {
   getNextPublicHolidays(): Observable<IHoliday[]> {
     return this.http
       .get<IHoliday[]>(`${this.baseUrl}/NextPublicHolidaysWorldwide`)
-      .pipe(
-        catchError(this.handleError<IHoliday[]>('getNextPublicHolidays', [])),
-      );
+      .pipe(catchError(this.handleError<IHoliday[]>('getNextPublicHolidays', [])));
   }
 
   /**
@@ -59,25 +50,17 @@ export class NagerDateService {
   getNextPublicHolidaysByCountry(countryCode: string): Observable<IHoliday[]> {
     return this.http
       .get<IHoliday[]>(`${this.baseUrl}/NextPublicHolidays/${countryCode}`)
-      .pipe(
-        catchError(
-          this.handleError<IHoliday[]>('getNextPublicHolidaysByCountry', []),
-        ),
-      );
+      .pipe(catchError(this.handleError<IHoliday[]>('getNextPublicHolidaysByCountry', [])));
   }
 
   // Fetch country info by country code
   getCountryInfo(countryCode: string): Observable<ICountryInfo> {
-    return this.http.get<ICountryInfo>(
-      `${this.baseUrl}/CountryInfo/${countryCode}`,
-    );
+    return this.http.get<ICountryInfo>(`${this.baseUrl}/CountryInfo/${countryCode}`);
   }
 
   // Fetch holidays by country code and year
   getHolidays(countryCode: string, year: number): Observable<IHoliday[]> {
-    return this.http.get<IHoliday[]>(
-      `${this.baseUrl}/PublicHolidays/${year}/${countryCode}`,
-    );
+    return this.http.get<IHoliday[]>(`${this.baseUrl}/PublicHolidays/${year}/${countryCode}`);
   }
 
   /**

@@ -43,3 +43,20 @@ ng serve
 
 ## Linting and Formatting
 
+1. Check for linting errors:
+
+```bash
+ng lint
+```
+
+2. Fix linting errors:
+
+```bash
+ng lint --fix
+```
+
+3. Format code:
+
+```bash
+pnpm run format
+```

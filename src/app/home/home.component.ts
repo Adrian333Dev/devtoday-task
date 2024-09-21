@@ -1,9 +1,5 @@
 import { Component, computed, effect, OnInit, signal } from '@angular/core';
-import {
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-} from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
@@ -35,9 +31,7 @@ export class HomePageComponent implements OnInit {
   countries = signal<ICountry[]>([]);
   searchQuery = signal<string>('');
   filteredCountries = computed(() =>
-    this.countries().filter((country) =>
-      country.name.toLowerCase().includes(this.searchQuery().toLowerCase())
-    )
+    this.countries().filter((country) => country.name.toLowerCase().includes(this.searchQuery().toLowerCase()))
   );
 
   randomCountries = signal<ICountry[]>([]);
@@ -53,12 +47,10 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     // Fetch available countries from the service and update state
-    this.nagerDateService
-      .getCountries()
-      .subscribe((countries) => {
-        console.log(countries);
-        this.countries.set(countries)
-      });
+    this.nagerDateService.getCountries().subscribe((countries) => {
+      console.log(countries);
+      this.countries.set(countries);
+    });
     this.fetchRandomCountries();
   }
 
@@ -69,11 +61,9 @@ export class HomePageComponent implements OnInit {
       this.randomCountries.set(random);
 
       random.forEach((country) => {
-        this.nagerDateService
-          .getNextPublicHolidaysByCountry(country.countryCode)
-          .subscribe((holidays) => {
-            country.nextHoliday = holidays[0]; // Set the first holiday for display
-          });
+        this.nagerDateService.getNextPublicHolidaysByCountry(country.countryCode).subscribe((holidays) => {
+          country.nextHoliday = holidays[0]; // Set the first holiday for display
+        });
       });
     });
   }

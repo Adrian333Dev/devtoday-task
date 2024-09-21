@@ -5,11 +5,7 @@
       <mat-card *ngIf="countryInfo()">
         <mat-card-header>
           <mat-card-title>{{ countryInfo()?.commonName }}</mat-card-title>
-          <mat-card-subtitle
-            >{{ countryInfo()?.officialName }} ({{
-              countryInfo()?.countryCode
-            }})</mat-card-subtitle
-          >
+          <mat-card-subtitle>{{ countryInfo()?.officialName }} ({{ countryInfo()?.countryCode }})</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <p><strong>Region:</strong> {{ countryInfo()?.region }}</p>
@@ -43,10 +39,7 @@
           <div class="year-selection mt-3">
             <mat-form-field appearance="outline">
               <mat-label>Select Year</mat-label>
-              <mat-select
-                [value]="currentYear()"
-                (selectionChange)="onYearChange($event.value)"
-              >
+              <mat-select [value]="currentYear()" (selectionChange)="onYearChange($event.value)">
                 <mat-option *ngFor="let year of yearsRange" [value]="year">
                   {{ year }}
                 </mat-option>
@@ -55,20 +48,15 @@
           </div>
 
           <!-- Holiday List with Fixed Height and Scroll -->
-          <div
-            class="holiday-list"
-            *ngIf="holidays() && holidays()?.length; else noHolidays"
-          >
+          <div class="holiday-list" *ngIf="holidays() && holidays()?.length; else noHolidays">
             <mat-list>
               <mat-list-item *ngFor="let holiday of holidays()">
                 <div>
                   <p>
-                    <strong
-                      >{{ holiday.localName }} ({{ holiday.name }})</strong
-                    >
+                    <strong>{{ holiday.localName }} ({{ holiday.name }})</strong>
                   </p>
                   <p><strong>Date:</strong> {{ holiday.date | date }}</p>
-                  <p><strong>Type:</strong> {{ holiday.types.join(", ") }}</p>
+                  <p><strong>Type:</strong> {{ holiday.types.join(', ') }}</p>
                 </div>
               </mat-list-item>
             </mat-list>
