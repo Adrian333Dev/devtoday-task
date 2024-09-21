@@ -25,7 +25,7 @@ To set up this project locally:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-repo.git
+git clone https://github.com/Adrian333Dev/devtoday-task.git
 cd your-repo
 ```
 
