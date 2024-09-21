@@ -31,7 +31,6 @@ import { ICountry } from '../types';
   styleUrl: './home.component.scss',
 })
 export class HomePageComponent implements OnInit {
-  // Signals to manage state
   countries = signal<ICountry[]>([]);
   searchQuery = signal<string>('');
   filteredCountries = computed(() =>
@@ -43,18 +42,13 @@ export class HomePageComponent implements OnInit {
   constructor(private nagerDateService: NagerDateService) {
     // Effect to reactively log or update something when countries or search changes
     effect(() => {
-      if (this.searchQuery()) {
-        console.log(`Searching for: ${this.searchQuery()}`);
-      }
+      if (this.searchQuery()) console.log(`Searching for: ${this.searchQuery()}`);
     });
   }
 
   ngOnInit(): void {
     // Fetch available countries from the service and update state
-    this.nagerDateService.getCountries().subscribe((countries) => {
-      console.log(countries);
-      this.countries.set(countries);
-    });
+    this.nagerDateService.getCountries().subscribe((countries) => this.countries.set(countries));
     this.fetchRandomCountries();
   }
 

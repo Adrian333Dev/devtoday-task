@@ -60,3 +60,8 @@ ng lint --fix
 ```bash
 pnpm run format
 ```
+
+## Important Notes
+
+- Angular has built in environment configuration features, so I used it instead of .env file.
+- In Holidays by Year pagination section, putting 10 buttons in a row for each year were making the group overflow and break into the second row which made it look bad. So I changed the pagination to simple selector component.
